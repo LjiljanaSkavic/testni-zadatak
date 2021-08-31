@@ -1,5 +1,4 @@
 import { IUser } from '../db/models/user/user';
-
 import * as express from 'express';
 import { Document } from 'mongoose';
 import { join } from 'path';
@@ -33,6 +32,8 @@ import { AuditLogRepository } from '../repositories/audit-log';
 import { RoleRepository } from '../repositories/role';
 import { IRole } from '../db/models/role/role';
 import { UserRepository } from '../repositories/user';
+import { WeatherData } from './../weather/weatherData';
+import { CityRepository } from '../repositories/city';
 
 const fileStreamRotator = require('file-stream-rotator');
 const busboy = require('connect-busboy');
@@ -90,6 +91,9 @@ export class Server {
     // start server
     server.startServer();
 
+    //staviti svoju funkciju
+    server.createCities();
+
     return server;
   }
 
@@ -112,7 +116,7 @@ export class Server {
 
     this.app.use(cors(corsOptions));
     this.app.use(helmet.frameguard());
-    this.app.options('*', cors(corsOptions));
+    this.app.options('*', <express.RequestHandler>cors(corsOptions));
 
     this.app.use(connectSlashes(false));
   }
@@ -174,7 +178,7 @@ export class Server {
     };
 
     createServer(options, <any>this.app).listen(this.environment.https.port, () => {
-      Logger.info(`NODE: HTTPS listening on port ${ this.environment.https.port }.`);
+      Logger.info(`NODE: HTTPS listening on port ${this.environment.https.port}.`);
     });
   }
 
@@ -253,4 +257,32 @@ export class Server {
       });
     }
   }
+
+  async createCities() {
+    const wData = new WeatherData();
+    const myCities = await wData.getData(10);
+    const cr = new CityRepository(this);
+    const dbCities = await cr.query();
+    if(dbCities.length != 10){
+      for (const cityElement of myCities) {
+        await cr.create(city => {
+            city.id = cityElement.id;
+            city.name = cityElement.name;
+            city.coord.lat = cityElement.coord.lat;
+            city.coord.lon = cityElement.coord.lon;
+            city.main = cityElement.main;
+            city.dt = cityElement.dt;
+            city.wind.speed = cityElement.wind.speed;
+            city.wind.deg = cityElement.wind.deg;
+            city.sys.country = cityElement.sys.country;
+            city.rain = cityElement.rain;
+            city.snow = cityElement.snow;
+            city.clouds.all = cityElement.clouds.all;
+            city.weather = cityElement.weather;
+          });
+      }
+  }
 }
+
+}
+

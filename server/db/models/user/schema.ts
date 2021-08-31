@@ -1,5 +1,4 @@
 import { SchemaDefinition, SchemaTypes } from 'mongoose';
-
 import { BaseSchemaDefinition } from '../../../core/db/base';
 
 export const UserSchema: SchemaDefinition = {
