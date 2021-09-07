@@ -1,1 +1,35 @@
-<p>table works!</p>
+<div class="container">
+<!--  <div class="card m-5 p-3">-->
+<!--    <div class="card-body">-->
+      <table class="table" id="cities">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Coord (lat:lon)</th>
+          <th>Temp</th>
+          <th>Feels_like</th>
+          <th>Temp_min</th>
+          <th>Temp_max</th>
+          <th>Pressure</th>
+          <th>Wind speed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let city of cities" (click)="onTableCityClick(city)">
+          <td>{{ city.id }}</td>
+          <td>{{ city.name }}</td>
+          <td>{{city.coord.lat}} : {{city.coord.lon}}</td>
+          <td>{{ city.main.temp }}</td>
+          <td>{{ city.main.feels_like }}</td>
+          <td>{{ city.main.temp_min }}</td>
+          <td>{{ city.main.temp_max }}</td>
+          <td>{{ city.main.pressure }}</td>
+          <td>{{ city.wind.speed }}</td>
+        </tr>
+        </tbody>
+      </table>
+<!--    </div>-->
+<!--  </div>-->
+</div>
+

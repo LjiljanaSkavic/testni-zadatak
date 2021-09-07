@@ -1,0 +1,7 @@
+<form (ngSubmit)="onAddCity(f)" #f="ngForm">
+  <label>Name:</label><br>
+  <input type="text" name="name" [ngModel]="name" ><br>
+  <label>Temp:</label><br>
+  <input type="text" name="temp" [(ngModel)]="temp"><br><br>
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
