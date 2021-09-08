@@ -4,6 +4,7 @@ const request = require('request-promise-native');
 export class WeatherData {
 
   cities: ICity[];
+
   async getData(numOf: number) {
     const key = '5c4f98348dd5a7d5c050c845d230d1ef';
     const options = {

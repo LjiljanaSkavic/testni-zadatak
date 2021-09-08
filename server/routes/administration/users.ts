@@ -11,7 +11,7 @@ import { Passport } from '../../core/auth/passport';
 
 export class UserRouter extends Router {
 
-  constructor(server: Server) { 
+  constructor(server: Server) {
     super(server);
   }
 

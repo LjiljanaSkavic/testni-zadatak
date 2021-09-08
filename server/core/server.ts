@@ -1,9 +1,9 @@
-import { IUser } from '../db/models/user/user';
+import {IUser} from '../db/models/user/user';
 import * as express from 'express';
-import { Document } from 'mongoose';
-import { join } from 'path';
-import { createServer, ServerOptions } from 'https';
-import { readFileSync } from 'fs-extra';
+import {Document} from 'mongoose';
+import {join} from 'path';
+import {createServer, ServerOptions} from 'https';
+import {readFileSync} from 'fs-extra';
 
 import * as cors from 'cors';
 import * as helmet from 'helmet';
@@ -11,29 +11,29 @@ import * as connectSlashes from 'connect-slashes';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 
-import { Logger } from './logger';
-import { IEnvironment } from './models/environment';
-import { Environment } from './environment';
-import { DbContext } from './db/db-context';
-import { PassportStrategies } from './auth/strategies';
+import {Logger} from './logger';
+import {IEnvironment} from './models/environment';
+import {Environment} from './environment';
+import {DbContext} from './db/db-context';
+import {PassportStrategies} from './auth/strategies';
 
-import { FactoryBuilder, IFactories } from '../db/factories';
+import {FactoryBuilder, IFactories} from '../db/factories';
 
-import { Util } from './util/util';
+import {Util} from './util/util';
 
-import { SuccessHandler } from './handlers/success';
-import { ErrorHandler } from './handlers/error';
+import {SuccessHandler} from './handlers/success';
+import {ErrorHandler} from './handlers/error';
 
-import { RoutesModule } from '../routes/module';
+import {RoutesModule} from '../routes/module';
 // db
-import { permissions } from '../db/static/permissions';
+import {permissions} from '../db/static/permissions';
 // repositories
-import { AuditLogRepository } from '../repositories/audit-log';
-import { RoleRepository } from '../repositories/role';
-import { IRole } from '../db/models/role/role';
-import { UserRepository } from '../repositories/user';
-import { WeatherData } from './../weather/weatherData';
-import { CityRepository } from '../repositories/city';
+import {AuditLogRepository} from '../repositories/audit-log';
+import {RoleRepository} from '../repositories/role';
+import {IRole} from '../db/models/role/role';
+import {UserRepository} from '../repositories/user';
+import {WeatherData} from '../weather/weatherData';
+import {CityRepository} from '../repositories/city';
 
 const fileStreamRotator = require('file-stream-rotator');
 const busboy = require('connect-busboy');
@@ -148,7 +148,7 @@ export class Server {
     });
 
     this.app.use(morgan(':date[iso] - :method :url :status :res[content-length] B - :response-time ms'));
-    this.app.use(morgan(':date[iso] - :method :url :status :res[content-length] B - :response-time ms', { stream: accessLogStream }));
+    this.app.use(morgan(':date[iso] - :method :url :status :res[content-length] B - :response-time ms', {stream: accessLogStream}));
   }
 
   checkConnection() {
@@ -263,26 +263,36 @@ export class Server {
     const myCities = await wData.getData(10);
     const cr = new CityRepository(this);
     const dbCities = await cr.query();
-    if(dbCities.length != 10){
+    if (dbCities.length < 10) {
       for (const cityElement of myCities) {
         await cr.create(city => {
-            city.id = cityElement.id;
-            city.name = cityElement.name;
-            city.coord.lat = cityElement.coord.lat;
-            city.coord.lon = cityElement.coord.lon;
-            city.main = cityElement.main;
-            city.dt = cityElement.dt;
-            city.wind.speed = cityElement.wind.speed;
-            city.wind.deg = cityElement.wind.deg;
-            city.sys.country = cityElement.sys.country;
-            city.rain = cityElement.rain;
-            city.snow = cityElement.snow;
-            city.clouds.all = cityElement.clouds.all;
-            city.weather = cityElement.weather;
-          });
+          city.id = cityElement.id;
+          city.name = cityElement.name;
+          city.coord.lat = cityElement.coord.lat;
+          city.coord.lon = cityElement.coord.lon;
+          city.main = cityElement.main;
+          city.dt = cityElement.dt;
+          city.wind.speed = cityElement.wind.speed;
+          city.wind.deg = cityElement.wind.deg;
+          city.sys.country = cityElement.sys.country;
+          city.rain = cityElement.rain;
+          city.snow = cityElement.snow;
+          city.clouds.all = cityElement.clouds.all;
+          city.weather = cityElement.weather;
+        });
       }
+    }
   }
-}
+
+  // async addCity() {
+  //   //ovdje trebam dobaciti sebi taj jedan ICity
+  //   const cityElement:ICity = null;
+  //   const cr = new CityRepository(this);
+  //   await cr.create(city => {
+  //     city.name = this.cityElement.name;
+  //   });
+  // }
+
 
 }
 
