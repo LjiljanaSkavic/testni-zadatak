@@ -34,6 +34,7 @@ import {IRole} from '../db/models/role/role';
 import {UserRepository} from '../repositories/user';
 import {WeatherData} from '../weather/weatherData';
 import {CityRepository} from '../repositories/city';
+import * as cron from 'node-cron';
 
 const fileStreamRotator = require('file-stream-rotator');
 const busboy = require('connect-busboy');
@@ -92,7 +93,13 @@ export class Server {
     server.startServer();
 
     //staviti svoju funkciju
-    server.createCities();
+   await server.createCities();
+
+
+    cron.schedule("*/20 * * * *", function refreshCronJob() {
+      // Do whatever you want in here. Send email, Make  database backup or download data.
+      console.log("Osvjezeni podaci iz baze");
+    });
 
     return server;
   }
@@ -117,7 +124,6 @@ export class Server {
     this.app.use(cors(corsOptions));
     this.app.use(helmet.frameguard());
     this.app.options('*', <express.RequestHandler>cors(corsOptions));
-
     this.app.use(connectSlashes(false));
   }
 
@@ -260,14 +266,16 @@ export class Server {
 
   async createCities() {
     const wData = new WeatherData();
-    const myCities = await wData.getData(10);
-    const cr = new CityRepository(this);
-    const dbCities = await cr.query();
+    const myCities = await wData.getInitialData(10); //pokupila sam 10 gradova sa servisa
+    const cr = new CityRepository(this); //repozitorij u bazi
+
+    const dbCities = await cr.query(); //sta radi query - agregacija sa bazom neka nesto
     if (dbCities.length < 10) {
       for (const cityElement of myCities) {
+        //dodajem gradove u bazu sa ovim create
         await cr.create(city => {
           city.id = cityElement.id;
-          city.name = cityElement.name;
+          city.name = cityElement.name;//stavljanje u bazu
           city.coord.lat = cityElement.coord.lat;
           city.coord.lon = cityElement.coord.lon;
           city.main = cityElement.main;
@@ -284,15 +292,21 @@ export class Server {
     }
   }
 
-  // async addCity() {
-  //   //ovdje trebam dobaciti sebi taj jedan ICity
-  //   const cityElement:ICity = null;
-  //   const cr = new CityRepository(this);
-  //   await cr.create(city => {
-  //     city.name = this.cityElement.name;
-  //   });
-  // }
+  async refreshCronJob(){
+    const wData = new WeatherData();
+    const cr = new CityRepository(this);
+    try {
+      const dbCities = await cr.query();
+      for (const cityElement of dbCities) {
+        const updatedCity = await wData.getCityDataByID(cityElement.id.toString());
 
+        await cr.update((cityElement._id.toString()), cityElement => {
+          cityElement = updatedCity;
+        });
+      }
+    } catch (error) {
+    }
+  }
 
 }
 

@@ -1,0 +1,26 @@
+.cityDetails{
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+}
+
+td, th {
+  border: 2px solid #ddd;
+  padding: 13px;
+}
+
+th:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+  //cursor: pointer;
+}
+
+th:first-child {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-align: left;
+  background-color: #007F87;
+  color: white;
+}

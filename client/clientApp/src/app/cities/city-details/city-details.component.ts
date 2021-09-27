@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {ICity} from "../../city-data/ICity";
 import {CityDetailsService} from "./city-details.service";
-import {ICity} from "../city-data/ICity";
 
 @Component({
   selector: 'app-city-details',

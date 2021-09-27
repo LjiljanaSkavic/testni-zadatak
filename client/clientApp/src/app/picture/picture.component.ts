@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./picture.component.scss']
 })
 export class PictureComponent implements OnInit {
+  url: any;
+  imagePath: string = "https://cdn-icons-png.flaticon.com/512/2105/2105217.png";
 
   constructor() { }
 

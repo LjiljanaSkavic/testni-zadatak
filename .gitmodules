@@ -1,0 +1,3 @@
+[submodule "client/clientApp/src/app/clientApp/src/app/ematic-core-ui"]
+	path = client/clientApp/src/app/clientApp/src/app/ematic-core-ui
+	url = https://LjiljanaSkavic@bitbucket.org/ematicsolutions/ematic-core-ui.git

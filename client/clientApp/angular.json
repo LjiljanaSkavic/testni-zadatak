@@ -28,11 +28,13 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/app/ematic-core-ui/assets"
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+              "node_modules/datatables.net-dt/css/jquery.dataTables.css",
+              "src/app/ematic-core-ui/scss/main.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -99,10 +101,11 @@
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/app/ematic-core-ui/assets"
             ],
             "styles": [
+              "src/app/ematic-core-ui/scss/main.scss",
               "src/styles.scss"
             ],
             "scripts": []

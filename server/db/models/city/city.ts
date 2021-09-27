@@ -25,5 +25,5 @@ export interface ICity extends IIdentifier, ISoftDelete, IAuditInfo {
         all: number
     };
     weather: IWeatherDescription[];
-    
+
 }

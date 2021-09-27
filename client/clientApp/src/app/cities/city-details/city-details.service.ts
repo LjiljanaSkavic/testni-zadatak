@@ -1,5 +1,5 @@
-import {ICity} from "../city-data/ICity";
 import {Injectable} from "@angular/core";
+import {ICity} from "../../city-data/ICity";
 
 @Injectable()
 export class CityDetailsService{

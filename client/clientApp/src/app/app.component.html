@@ -1,8 +1,26 @@
-<app-picture></app-picture>
-<app-input-form></app-input-form>
-<app-button-group></app-button-group>
-<hr>
-<app-table></app-table>
-<!--ngif ako je klik na neki grad da se prikaze-->
-<!--<app-city-data *ngIF=""></app-city-data>-->
-<app-city-details></app-city-details>
+<!--<div [style.background-image]="'url(/images/' + trls.img + ')'"></div>-->
+<!--<div class="panel panel-default" [ngStyle]="{'background-image': getUrl()}">-->
+
+  <app-picture class="pictureElement"></app-picture>
+  <div class="col" id="searchElements">
+    <div class="searchElement">
+      <es-lookup [placeholder]="'Search for new city'"
+                 [lazyLoad]="true"
+                 [query]="onCityQuery"
+                 [displayField]="'name'"
+                 [(ngModel)]="city"
+      ></es-lookup>
+    </div>
+    <div class="col">
+      <div class="row">
+        <es-button class="addButton" [text]="'Add city'"
+                   (clicked)="onAddCity()"
+        ></es-button>
+        <es-button class="showButton" [text]="'Show cities'"
+                   (clicked)="onShowCities()"
+        ></es-button>
+      </div>
+    </div>
+  </div>
+  <app-cities class="cities"></app-cities>
+

@@ -1,0 +1,76 @@
+<div class="cityDetails">
+  <form *ngIf="check()===true">
+    <tr>
+      <th>ID</th>
+      <th>{{ selectedCity.id }}</th>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <th>{{ selectedCity.name }}</th>
+    </tr>
+    <tr>
+      <th>Coord-lat</th>
+      <th>{{ selectedCity.coord.lat }}</th>
+    </tr>
+    <tr>
+      <th>Coord-lon</th>
+      <th>{{ selectedCity.coord.lon }}</th>
+    </tr>
+    <tr>
+      <th>Temp</th>
+      <th>{{ selectedCity.main.temp }}</th>
+    </tr>
+    <tr>
+      <th>Temp_min</th>
+      <th>{{ selectedCity.main.temp_min }}</th>
+    </tr>
+    <tr>
+      <th>Temp_max</th>
+      <th>{{ selectedCity.main.temp_max }}</th>
+    </tr>
+    <tr>
+      <th>Pressure</th>
+      <th>{{ selectedCity.main.pressure }}</th>
+    </tr>
+    <tr>
+      <th>Humidity</th>
+      <th>{{ selectedCity.main.humidity }}</th>
+    </tr>
+    <tr>
+      <th>Sea_level</th>
+      <th>{{ selectedCity.main.sea_level }}</th>
+    </tr>
+    <tr>
+      <th>Grnd_level</th>
+      <th>{{ selectedCity.main.grnd_level }}</th>
+    </tr>
+    <tr>
+      <th>Dt</th>
+      <th>{{ selectedCity.dt }}</th>
+    </tr>
+    <tr>
+      <th>Wind-speed</th>
+      <th>{{ selectedCity.wind.speed }}</th>
+    </tr>
+    <tr>
+      <th>Wind-deg</th>
+      <th>{{ selectedCity.wind.deg }}</th>
+    </tr>
+    <tr>
+      <th>Sys-country</th>
+      <th>{{ selectedCity.sys.country }}</th>
+    </tr>
+    <tr>
+      <th>Rain</th>
+      <th>{{ selectedCity.rain }}</th>
+    </tr>
+    <tr>
+      <th>Snow</th>
+      <th>{{ selectedCity.snow }}</th>
+    </tr>
+  </form>
+</div>
+
+
+
+
